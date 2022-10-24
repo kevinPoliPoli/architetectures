@@ -45,36 +45,75 @@ v7: .space 480
 ;f12 contains values of v7
 
 main:   daddi r8,r0,0
-        daddi r9,r0,480
-        j loop 
-        nop
+        daddi r9,r0,472
 
-loop:   l.d f1,v1(r8)
+loop:   
+        l.d f1,v1(r8)
         l.d f2,v2(r8)
         l.d f3,v3(r8)
         l.d f4,v4(r8)
-        add.d f5,f0,f0
-        add.d f6,f0,f0
-        add.d f7,f0,f0
-        add.d f5,f1,f2
-        mul.d f5,f5,f3
-        add.d f5,f5,f4
-        mul.d f6,f4,f1
-        div.d f6,f5,f6
-        add.d f7,f2,f3
-        mul.d f7,f6,f7
-        j store_values
-        nop
+        daddi r8,r8,8
+        l.d f5,v1(r8)
+        l.d f6,v2(r8)
+        l.d f7,v3(r8)
+        l.d f8,v4(r8)
+        daddi r8,r8,8
+        l.d f9,v1(r8)
+        l.d f10,v2(r8)
+        l.d f11,v3(r8)
+        l.d f12,v4(r8)
 
-store_values:   s.d f5,v5(r8)
-                s.d f6,v6(r8)
-                s.d f7,v7(r8)
-                j increment_index_and_check
-                nop
+        ;///////////////////////////////////
 
-increment_index_and_check:  daddi r8,r8,8
-                            slt r13,r8,r9
-                            bnez r13,loop
-                            nop
+        ;UNROLL 1 - 13,14,15
+        mul.d f14,f4,f1
+        add.d f13,f1,f2
+        add.d f15,f2,f3
 
+        mul.d f13,f13,f3
+        add.d f13,f13,f4
+        div.d f14,f13,f14
+        mul.d f15,f14,f15
+
+        ;UNROLL 2 - 16,17,18
+        mul.d f17,f4,f5
+        add.d f16,f1,f6
+        add.d f18,f2,f7
+
+        mul.d f16,f16,f7
+        add.d f16,f16,f8
+        div.d f17,f16,f17
+        mul.d f18,f17,f18
+
+        ;UNROLL 3 - 19,20,21
+        mul.d f20,f4,f9
+        add.d f19,f1,f10
+        add.d f21,f2,f11
+
+        mul.d f19,f19,f11
+        add.d f19,f19,f12
+        div.d f20,f19,f20
+        mul.d f21,f20,f21
+
+
+        ;///////////////////////////////////
+
+        s.d f19,v5(r8)
+        s.d f20,v6(r8)
+        s.d f21,v7(r8)
+        daddi r8,r8,-8
+
+        s.d f16,v5(r8)
+        s.d f17,v6(r8)
+        s.d f18,v7(r8)
+        daddi r8,r8,-8
+
+        s.d f13,v5(r8)
+        s.d f14,v6(r8)
+        s.d f15,v7(r8)
+
+        slt r10,r8,r9
+        bnez r10,loop
+        daddi r8,r8,24
+ 
 exit: halt

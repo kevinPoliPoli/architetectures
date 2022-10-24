@@ -45,34 +45,27 @@ v7: .space 480
 ;f12 contains values of v7
 
 main:   daddi r8,r0,0
-        daddi r9,r0,480
+        daddi r9,r0,472
 
 loop:   l.d f1,v1(r8)
         l.d f2,v2(r8)
         l.d f3,v3(r8)
         l.d f4,v4(r8)
 
-        add.d f5,f0,f0
-        add.d f6,f0,f0
-        add.d f7,f0,f0
-
-        add.d f5,f1,f2
         mul.d f6,f4,f1
-        mul.d f5,f5,f3
-        add.d f5,f5,f4
+        add.d f5,f1,f2
         add.d f7,f2,f3
 
+        mul.d f5,f5,f3
+        add.d f5,f5,f4
         div.d f6,f5,f6
-
         mul.d f7,f6,f7
 
         s.d f5,v5(r8)
         s.d f6,v6(r8)
         s.d f7,v7(r8)
-
-        daddi r8,r8,8
+        
         bne r8,r9,loop
+        daddi r8,r8,8
 
 exit: halt
-
- 
