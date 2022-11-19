@@ -1,0 +1,3 @@
+Dependencies for Project 'ASM_template', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 6160000::V6.16::ARMCLANG
+F (.\startup.s)(0x636E5FAC)(--target=arm-arm-none-eabi -mcpu=cortex-m3 -masm=auto -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-IC:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/2.7.1/Device/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 536" -Wa,armasm,--pd,"LPC175x_6x SETA 1"-o ./objects/startup.o)
