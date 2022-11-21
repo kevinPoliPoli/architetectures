@@ -1,0 +1,197 @@
+---------------------------------------
+FILE 1
+final_tick                               101673175500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   572.91                       # Real time elapsed on the host
+
+sim_insts                                    92000008                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 7012642                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        203346419                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95439150                       # Number of instructions committed
+
+---------------------------------------
+FILE 2
+final_tick                                67872827500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   444.25                       # Real time elapsed on the host
+
+sim_insts                                    92000008                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 7555794                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        135745662                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95439150                       # Number of instructions committed
+
+---------------------------------------
+FILE 3
+final_tick                                58888060000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   421.53                       # Real time elapsed on the host
+
+sim_insts                                    92000008                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                10634175                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        117776125                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95439150                       # Number of instructions committed
+
+---------------------------------------
+FILE 4
+final_tick                               120975559500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   708.81                       # Real time elapsed on the host
+
+sim_insts                                   108992939                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 7104451                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        241951158                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts            112644136                       # Number of instructions committed
+
+---------------------------------------
+FILE 5
+final_tick                               103437809500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   585.15                       # Real time elapsed on the host
+
+sim_insts                                    91998378                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 6952993                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        206875664                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95403756                       # Number of instructions committed
+
+---------------------------------------
+FILE 6
+final_tick                               104362054000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   606.56                       # Real time elapsed on the host
+
+sim_insts                                    92012995                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 6657900                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        208724194                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95453125                       # Number of instructions committed
+
+---------------------------------------
+FILE 7
+final_tick                               102034569500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   584.07                       # Real time elapsed on the host
+
+sim_insts                                    92007423                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 7016459                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        204069183                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95412785                       # Number of instructions committed
+
+---------------------------------------
+FILE 8
+final_tick                                86966276000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   508.42                       # Real time elapsed on the host
+
+sim_insts                                    77333366                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 6483950                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        173932554                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             80727878                       # Number of instructions committed
+
+---------------------------------------
+BIMODE
+final_tick                               101091299500                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   573.64                       # Real time elapsed on the host
+
+sim_insts                                    92000008                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 6745581                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                        202182665                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             95439150                       # Number of instructions committed
+
+---------------------------------------
+TOURNAMENT
+final_tick                                42964546000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   238.75                       # Real time elapsed on the host
+
+sim_insts                                    42671614                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 3121546                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                         85929136                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             43590470                       # Number of instructions committed
+
+---------------------------------------
+MY PREDICTOR
+final_tick                                42235625000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+
+host_seconds                                   230.34                       # Real time elapsed on the host
+
+sim_insts                                    42671614                       # Number of instructions simulated
+
+system.cpu.branchPred.BTBHits                 3062728                       # Number of BTB hits
+
+system.cpu.branchPred.BTBCorrect                    0                       # Number of correct BTB predictions (this stat may not work properly.
+
+system.cpu_clk_domain.clock                       500                       # Clock period in ticks
+
+system.cpu.numCycles                         84471294                       # number of cpu cycles simulated
+
+system.cpu.commit.committedInsts             43590470                       # Number of instructions committed
