@@ -205,8 +205,10 @@ ARM Macro Assembler    Page 4
   126 00000000                 EXPORT           Reset_Handler             [WEAK
 ]
   127 00000000         
-  128 00000000 F04F 0301       MOV              r3, #2_0001
-  129 00000004 F04F 0403       MOV              r4, #2_0011
+  128 00000000 F04F 4300       MOV              r3, #2_100000000000000000000000
+00000000
+  129 00000004 F04F 4400       MOV              r4, #2_100000000000000000000000
+00000000
   130 00000008         
   131 00000008 18C2            ADDS             r2, r0, r3
   132 0000000A 1AA5            SUBS             r5, r4, r2
@@ -256,14 +258,14 @@ ARM Macro Assembler    Page 4
                                PROC
   169 0000001E                 EXPORT           SVC_Handler               [WEAK
 ]
-  170 0000001E E7FE            B                .
-  171 00000020                 ENDP
 
 
 
 ARM Macro Assembler    Page 5 
 
 
+  170 0000001E E7FE            B                .
+  171 00000020                 ENDP
   173 00000020         DebugMon_Handler
                                PROC
   174 00000020                 EXPORT           DebugMon_Handler          [WEAK
@@ -321,14 +323,14 @@ ARM Macro Assembler    Page 5
   204 00000026                 EXPORT           PLL0_IRQHandler           [WEAK
 ]
   205 00000026                 EXPORT           RTC_IRQHandler            [WEAK
-]
-  206 00000026                 EXPORT           EINT0_IRQHandler          [WEAK
 
 
 
 ARM Macro Assembler    Page 6 
 
 
+]
+  206 00000026                 EXPORT           EINT0_IRQHandler          [WEAK
 ]
   207 00000026                 EXPORT           EINT1_IRQHandler          [WEAK
 ]
@@ -386,14 +388,14 @@ ARM Macro Assembler    Page 6
   244 00000026         EINT2_IRQHandler
   245 00000026         EINT3_IRQHandler
   246 00000026         ADC_IRQHandler
-  247 00000026         BOD_IRQHandler
-  248 00000026         USB_IRQHandler
 
 
 
 ARM Macro Assembler    Page 7 
 
 
+  247 00000026         BOD_IRQHandler
+  248 00000026         USB_IRQHandler
   249 00000026         CAN_IRQHandler
   250 00000026         DMA_IRQHandler
   251 00000026         I2S_IRQHandler
