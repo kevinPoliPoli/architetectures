@@ -123,17 +123,29 @@ var				RN 		2
 ; Reset Handler
 
 Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]                                            
+                EXPORT  Reset_Handler             [WEAK] 
                 
-				MOV r0, #16711935
-				MOV r0, #0xA5A5A5A5
+				MOV r2, #2_0001
+				MOV r3, #2_0011	
+
+				subs r1, r2, r3 
+				beq r1, equal
+				bltz r1, second_max
 				
-				ADDS	R1, var, R3
-				SUBVS	R3, R1, r4
-				SUBVC	R3, R4, r1
-				CLZ r3,r4
+				
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+equal			LSR r4, r3, #1
+				add r4, r2, r4
 				LDR     R0, =stop
 				
+first_max 		mov r5, r2
+				LDR     R0, =stop
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+second_max		mov r5, r3
+				LDR     R0, =stop
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 stop            BX      R0
                 ENDP
 

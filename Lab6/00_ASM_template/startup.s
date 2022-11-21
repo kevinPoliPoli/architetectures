@@ -125,13 +125,12 @@ var				RN 		2
 Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]                                            
                 
-				MOV r0, #16711935
-				MOV r0, #0xA5A5A5A5
+				MOV r3, #2_10000000000000000000000000000000
+				MOV r4, #2_10000000000000000000000000000000
 				
-				ADDS	R1, var, R3
-				SUBVS	R3, R1, r4
-				SUBVC	R3, R4, r1
-				CLZ r3,r4
+				ADDS r2, r0, r3
+				SUBS r5, r4, r2
+				
 				LDR     R0, =stop
 				
 stop            BX      R0
