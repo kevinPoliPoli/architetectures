@@ -123,26 +123,24 @@ var				RN 		2
 ; Reset Handler
 
 Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]  
-					
-				; xtal=16000000 
-                				
-				mov r2, #2_10
-				mov r3, #2_10
+                EXPORT  Reset_Handler             [WEAK]                                            
+                
+				mov r1, #2_00111101 
+				mov r2, #0xA
+				mov r3, #0xF
 				
-				subs r5, r2, r3
-				;r3 = r2
-				lsreq r4, r3, #1
-				addeq r4, r4, r2
-				;r3 > r2
-				addlt r4, r4, r3
-				;r3 < r2
-				addgt r4, r4, r2
+				clz r0, r1
+				tst r0, #2_1
+				bne odd
+				b even
 				
 				
-
+odd				add r4, r2, r3
 				LDR     R0, =stop
-				BX r0
+				BX      R0
+
+even			sub r4, r2, r3
+				LDR     R0, =stop
 				
 stop            BX      R0
                 ENDP
