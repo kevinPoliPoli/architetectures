@@ -115,59 +115,428 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 AREA    |.ARM.__at_0x02FC|, CODE, READONLY
 CRP_Key         DCD     0xFFFFFFFF
                 ENDIF
-
-
-var				RN 		2
-
-                AREA    static_data, DATA, READONLY, ALIGN=3
-Ingredient_calories 	DCD 0x01, 30, 0x02, 70, 0x03, 200, 0x04, 42, 0x05, 81
-						DCD 0x06, 20				
-				
-Ingredient_quantity 	DCD 0x02, 50, 0x05, 3, 0x03, 10, 0x01, 5, 0x04
-						DCD 8, 0x06, 30
-							
-Num_ingredients 		DCB 6
-
-				AREA 	dynamic_data, CODE, READWRITE, ALIGN=3
-Calories_ordered 		SPACE 6
-				
-Quantity_ordered 		SPACE 6
-				
-max_calory				DCB 1
-
-max_quantity			DCB 1
 					
+                AREA    static_data, DATA, READONLY, ALIGN=3
+Ingredient_calories_original 	DCD 0x01, 30, 0x02, 70, 0x03, 200, 0x04, 42, 0x05, 81
+								DCD 0x06, 20				
+				
+Ingredient_quantity_original 	DCD 0x02, 50, 0x05, 3, 0x03, 10, 0x01, 5, 0x04
+								DCD 8, 0x06, 30
+							
+Num_ingredients 				DCB 6
+
+				AREA 	dynamic_data, DATA, READWRITE, ALIGN=3
+
+Ingredient_calories		SPACE 48	
+
+Ingredient_quantity     SPACE 48
+	
+Calories_ordered 		SPACE 24
+				
+Quantity_ordered 		SPACE 24
+	
+Most_caloric_array 		SPACE 48
+	
 
 ; Reset Handler
 				AREA	|.text|, CODE, READONLY
 
 Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]    
+                EXPORT  Reset_Handler             [WEAK]
+
+				;--------------------- DUPLICATE ARARYS ---------------------
+				ldr r0, =Ingredient_calories_original
+				ldr r1, =Ingredient_calories
 				
-				LDR r0, =Num_ingredients 
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				
+				mov r0, #0x0
+				mov r1, #0x0
+				mov r2, #0x0
+				mov r3, #0x0
+				
+				;--------------------- REGISTER INITIALIZZATION ---------------------
+				
+				;obtain the maximum size of the array
+				LDR r0, =Num_ingredients
+				ldrb r12, [r0]
+				mov r0, #0x0
+				
+				LDR r1, =Ingredient_calories ;pointer to the first element of the window
+				add r2, r1, #8 ;pointer to the second element of the window
+				
+				;r3 temp label 
+				;r4 temp value
+				
+				;r5 reserved
+				;r6 reserved
+				;r7 reserved
+				;r8 reserved
+				
+				mov r11, #0x6 ;exit condition
+				mov r12, #0x0 ;swap counter
+				mov r0, r11 ;maximum swap per iteration
+				
+				
+restart_cal 	;how many swaps at this iteration?
+				sub r0, r0, #1
+				
+				;exit contition
+				cmp r0, #0 
+				beq save_array_cal
+				
+				;point to the start of the array again
 				LDR r1, =Ingredient_calories
-				LDR r2, =Calories_ordered
+				add r2, r1, #8
 				
-				;r11 reserved
+				;reset swap counter
+				mov r12, #0x0
 				
+				
+continue_cal	;BUBBLE SORT IMPLEMENTATION
+				
+				;--------------------- START SWAP ---------------------
+				;take the i-th and the i+1-th elements
+				ldrd r5, r6, [r1]
+				ldrd r7, r8, [r2]
+				
+				;check if maximum
+				cmp r6, r8
+				
+				;r6 < r8 -> N=1 -> swap
+				;save first item of the window in a temporary register
+				movmi r3, r5 
+				movmi r4, r6
+				;save second item in the first
+				movmi r5, r7
+				movmi r6, r8
+				;restore the first item
+				movmi r7, r3
+				movmi r8, r4
+				
+				;update the array
+				strd r5, r6, [r1]
+				strd r7, r8, [r2]
+				
+				;--------------------- RESTART CONDITION ---------------------
+				;update restart_counter
+				add r12, #1
+				;check if restart
+				cmp r12, r0
+				;yes -> restart
+				beq restart_cal
+				;no -> update window
+				add r1, r1, #8
+				add r2, r2, #8
+				bne continue_cal
+				
+save_array_cal	ldr r0, =Calories_ordered
+				ldr r1, =Ingredient_calories
+				ldrb r2, [r1]
+				strb r2, [r0]
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				
+				b next_step
+
+next_step 		ldr r0, =Ingredient_quantity_original
+				ldr r1, =Ingredient_quantity
+				
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				ldrd r2, r3, [r0]
+				strd r2, r3, [r1]
+				add r0, #8
+				add r1, #8
+				
+				mov r0, #0x0
+				mov r1, #0x0
+				mov r2, #0x0
+				mov r3, #0x0
+				mov r4, #0x0
+				mov r5, #0x0
+				mov r6, #0x0
+				mov r7, #0x0
+				mov r8, #0x0
+				mov r9, #0x0
+				mov r10, #0x0
+				mov r11, #0x0
+				mov r12, #0x0
+				
+;--------------------- REGISTER INITIALIZZATION ---------------------
+				
+				;obtain the maximum size of the array
+				LDR r0, =Num_ingredients
+				ldrb r12, [r0]
+				mov r0, #0x0
+				
+				LDR r1, =Ingredient_quantity ;pointer to the first element of the window
+				add r2, r1, #8 ;pointer to the second element of the window
+				
+				;r3 temp label 
+				;r4 temp value
+				
+				;r5 reserved
+				;r6 reserved
+				;r7 reserved
+				;r8 reserved
+				
+				mov r11, #0x6 ;exit condition
+				mov r12, #0x0 ;swap counter
+				mov r0, r11 ;maximum swap per iteration
+				
+				
+restart_qua 	;how many swaps at this iteration?
+				sub r0, r0, #1
+				
+				;exit contition
+				cmp r0, #0 
+				beq save_array_qua 
+				
+				;point to the start of the array again
+				LDR r1, =Ingredient_quantity
+				add r2, r1, #8
+				
+				;reset swap counter
+				mov r12, #0x0
+				
+				
+continue_qua	;BUBBLE SORT IMPLEMENTATION
+				
+				;--------------------- START SWAP ---------------------
+				;take the i-th and the i+1-th elements
+				ldrd r5, r6, [r1]
+				ldrd r7, r8, [r2]
+				
+				;check if maximum
+				cmp r6, r8
+				
+				;r6 < r8 -> N=1 -> swap
+				;save first item of the window in a temporary register
+				movmi r3, r5 
+				movmi r4, r6
+				;save second item in the first
+				movmi r5, r7
+				movmi r6, r8
+				;restore the first item
+				movmi r7, r3
+				movmi r8, r4
+				
+				;update the array
+				strd r5, r6, [r1]
+				strd r7, r8, [r2]
+				
+				;--------------------- RESTART CONDITION ---------------------
+				;update restart_counter
+				add r12, #1
+				;check if restart
+				cmp r12, r0
+				;yes -> restart
+				beq restart_qua 
+				;no -> update window
+				add r1, r1, #8
+				add r2, r2, #8
+				bne continue_qua 
+				
+save_array_qua 	ldr r0, =Quantity_ordered
+				ldr r1, =Ingredient_quantity
+				ldrb r2, [r1]
+				strb r2, [r0]
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				ldrb r2, [r1, #8]!
+				strb r2, [r0, #4]!
+				
+				b most_cal
+				
+most_cal		mov r0, #0x0
+				mov r1, #0x0
+				mov r2, #0x0
+				mov r3, #0x0
+				mov r4, #0x0
+				mov r5, #0x0
+				mov r6, #0x0
+				mov r7, #0x0
+				mov r8, #0x0
+				mov r9, #0x0
+				mov r10, #0x0
+				mov r11, #0x0
+				mov r12, #0x0
+				
+				ldr r0, =Most_caloric_array 
+				LDR r1, =Ingredient_calories
+				ldr R2, =Ingredient_quantity
 				
 				mov r10, #0x0 ; exit condition
-				ldrb r12, [r0]	;max size
+				mov r12, #6	
 				
 loop			CMP r10, r12 ; exit?
-				beq stop
+				beq search_max
 				
-				; order calories vector
-				ldrd r3, r4, [r1]
+				ldrd r4, r5, [r1]
+				ldrd r6, r7, [r2]
 				
-				ldrd r5, r6, [r1, #8]
+				CMP r4, r6 ; compare the labels
+				
+				muleq r8, r5, r7 ;multiply 
+				strdeq r4, r8, [r0] ;store into the array
+				addeq r0, #8 ; increment the product array
+				addeq r1, r1, #8 ; go ahead on the first array
+				ldreq r2, =Ingredient_quantity ; reset the pointer to the second array
+				addeq r10, r10, #1; update the iteration number
+				beq loop
+				
+				addne r2, r2, #8 ; go ahead on the second array
+				bne loop
 				
 				
+search_max		mov r0, #0x0
+				mov r1, #0x0
+				mov r2, #0x0
+				mov r3, #0x0
+				mov r4, #0x0
+				mov r5, #0x0
+				mov r6, #0x0
+				mov r7, #0x0
+				mov r8, #0x0
+				mov r9, #0x0
+				mov r10, #0x0
+				mov r11, #0x0
+				mov r12, #0x0
+				
+				;--------------------- REGISTER INITIALIZZATION ---------------------
+				
+				;obtain the maximum size of the array
+				LDR r0, =Num_ingredients
+				ldrb r12, [r0]
+				mov r0, #0x0
+				
+				LDR r1, =Most_caloric_array ;pointer to the first element of the window
+				add r2, r1, #8 ;pointer to the second element of the window
+				
+				;r3 temp label 
+				;r4 temp value
+				
+				;r5 reserved
+				;r6 reserved
+				;r7 reserved
+				;r8 reserved
+				
+				mov r11, #0x6 ;exit condition
+				mov r12, #0x0 ;swap counter
+				mov r0, r11 ;maximum swap per iteration
 				
 				
+restart_max 	;how many swaps at this iteration?
+				sub r0, r0, #1
+				
+				;exit contition
+				cmp r0, #0 
+				beq save_max
+				
+				;point to the start of the array again
+				LDR r1, =Most_caloric_array
+				add r2, r1, #8
+				
+				;reset swap counter
+				mov r12, #0x0
+				
+				
+continue_max	;BUBBLE SORT IMPLEMENTATION
+				
+				;--------------------- START SWAP ---------------------
+				;take the i-th and the i+1-th elements
+				ldrd r5, r6, [r1]
+				ldrd r7, r8, [r2]
+				
+				;check if maximum
+				cmp r6, r8
+				
+				;r6 < r8 -> N=1 -> swap
+				;save first item of the window in a temporary register
+				movmi r3, r5 
+				movmi r4, r6
+				;save second item in the first
+				movmi r5, r7
+				movmi r6, r8
+				;restore the first item
+				movmi r7, r3
+				movmi r8, r4
+				
+				;update the array
+				strd r5, r6, [r1]
+				strd r7, r8, [r2]
+				
+				;--------------------- RESTART CONDITION ---------------------
+				;update restart_counter
+				add r12, #1
+				;check if restart
+				cmp r12, r0
+				;yes -> restart
+				beq restart_max
+				;no -> update window
+				add r1, r1, #8
+				add r2, r2, #8
+				bne continue_max
 
-		
-				
+save_max		ldr r8, =Most_caloric_array
+				ldrd r9, r10, [r8]
+				mov r11, r9
 				
 stop            LDR     R0, =stop
 				BX      R0

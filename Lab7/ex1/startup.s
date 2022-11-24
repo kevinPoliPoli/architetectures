@@ -143,7 +143,7 @@ Reset_Handler   PROC
 				mov r10, #0x0 ; exit condition
 				ldrb r12, [r0]	
 				
-loop			CMP r10, r12 ; exit?
+loop				CMP r10, r12 ; exit?
 				beq stop
 				
 				ldrd r4, r5, [r1]
