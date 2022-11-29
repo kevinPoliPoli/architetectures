@@ -1,0 +1,109 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             asm_functions, CODE, READONLY
+    2 00000000                 EXPORT           check_square
+    3 00000000                 EXPORT           my_division
+    4 00000000                 IMPORT           __aeabi_fdiv
+    5 00000000         
+    6 00000000         
+    7 00000000         check_square
+                               PROC
+    8 00000000         
+    9 00000000         ; save volatile registers
+   10 00000000 B506            STMFD            sp!,{r1,r2,LR}
+   11 00000002         
+   12 00000002 FB02 F202       mul              r2, r2, r2  ;contains r
+   13 00000006         
+   14 00000006 FB00 F000       mul              r0, r0, r0  ;contains x
+   15 0000000A FB01 F101       mul              r1, r1, r1  ;contains y
+   16 0000000E 4408            add              r0, r0, r1
+   17 00000010         
+   18 00000010 4290            cmp              r0, r2
+   19 00000012         ;<=
+   20 00000012 BFD4 2001       movle            r0, #1
+   21 00000016         ;>
+   22 00000016 2000            movgt            r0, #0
+   23 00000018         
+   24 00000018         ; restore volatile registers
+   25 00000018 BD06            LDMFD            sp!,{r1,r2,PC}
+   26 0000001A         
+   27 0000001A                 ENDP
+   28 0000001A         
+   29 0000001A         
+   30 0000001A         my_division
+                               PROC
+   31 0000001A         
+   32 0000001A         ; save volatile registers
+   33 0000001A B5F0            STMFD            sp!,{R4,R5,R6,R7,LR}
+   34 0000001C         ;take a and b
+   35 0000001C 6800            ldr              r0, [r0]
+   36 0000001E 6809            ldr              r1, [r1]
+   37 00000020         ;
+   38 00000020         ;call __aeabi_fdiv
+   39 00000020 F7FF FFFE       BL               __aeabi_fdiv
+   40 00000024         ;set return value
+   41 00000024         ;STMFD sp!, {r0,r1}
+   42 00000024         ; restore volatile registers
+   43 00000024 BDF0            LDMFD            sp!,{R4,R5,R6,R7,PC}
+   44 00000026         
+   45 00000026                 ENDP
+   46 00000026         
+   47 00000026                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\asm_functions.d -o.\asm_functions.o -I.\RTE\_Target_1 -IC:\Users
+\Kevin\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\Ke
+vin\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="
+__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 537" --predefine="_RTE_ SETA
+ 1" --predefine="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\asm_fun
+ctions.lst asm_functions.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_functions 00000000
+
+Symbol: asm_functions
+   Definitions
+      At line 1 in file asm_functions.s
+   Uses
+      None
+Comment: asm_functions unused
+check_square 00000000
+
+Symbol: check_square
+   Definitions
+      At line 7 in file asm_functions.s
+   Uses
+      At line 2 in file asm_functions.s
+Comment: check_square used once
+my_division 0000001A
+
+Symbol: my_division
+   Definitions
+      At line 30 in file asm_functions.s
+   Uses
+      At line 3 in file asm_functions.s
+Comment: my_division used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+__aeabi_fdiv 00000000
+
+Symbol: __aeabi_fdiv
+   Definitions
+      At line 4 in file asm_functions.s
+   Uses
+      At line 39 in file asm_functions.s
+Comment: __aeabi_fdiv used once
+1 symbol
+338 symbols in table

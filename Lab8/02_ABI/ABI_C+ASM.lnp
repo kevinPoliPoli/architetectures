@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\startup_lpc17xx.o"
+".\main.o"
+".\asm_functions.o"
+--strict --scatter ".\ABI_C+ASM.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\ABI_C+ASM.map" -o .\ABI_C+ASM.axf
