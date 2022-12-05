@@ -42,17 +42,15 @@ ARM Macro Assembler    Page 1
    34 0000001C         ;take a and b
    35 0000001C 6800            ldr              r0, [r0]
    36 0000001E 6809            ldr              r1, [r1]
-   37 00000020         ;
-   38 00000020         ;call __aeabi_fdiv
-   39 00000020 F7FF FFFE       BL               __aeabi_fdiv
-   40 00000024         ;set return value
-   41 00000024         ;STMFD sp!, {r0,r1}
-   42 00000024         ; restore volatile registers
-   43 00000024 BDF0            LDMFD            sp!,{R4,R5,R6,R7,PC}
+   37 00000020         ;call __aeabi_fdiv
+   38 00000020 F7FF FFFE       BL               __aeabi_fdiv
+   39 00000024         ;set return value
+   40 00000024         ; restore volatile registers
+   41 00000024 BDF0            LDMFD            sp!,{R4,R5,R6,R7,PC}
+   42 00000026         
+   43 00000026                 ENDP
    44 00000026         
-   45 00000026                 ENDP
-   46 00000026         
-   47 00000026                 END
+   45 00000026                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\asm_functions.d -o.\asm_functions.o -I.\RTE\_Target_1 -IC:\Users
 \Kevin\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\Ke
@@ -103,7 +101,7 @@ Symbol: __aeabi_fdiv
    Definitions
       At line 4 in file asm_functions.s
    Uses
-      At line 39 in file asm_functions.s
+      At line 38 in file asm_functions.s
 Comment: __aeabi_fdiv used once
 1 symbol
 338 symbols in table

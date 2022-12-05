@@ -14,8 +14,7 @@ int main(void){
 	float r = 2; 
 	volatile float pi;
 	float area = 0;
-	volatile int j, a = 0, b = 0; 
-		
+	volatile int j, a = 0, b = 0;		
 
 	for(j=0; j<COLUMNS*ROWS ;j+=2){
 			a = Matrix_Coordinates[j];
@@ -31,6 +30,7 @@ int main(void){
 		
 	__asm__("svc 0xca");
 		
+	__asm__("svc 0xfe");
 	
 		
 	while(1);

@@ -117,7 +117,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
 CRP_Key         DCD     0xFFFFFFFF
                 ENDIF
 
-				AREA	data, DATA, READONLY, ALIGN=3
+				AREA	data_r, DATA, READONLY, ALIGN=3
 					
 Matrix_Coordinates 	DCD -5,5,-4,5,-3,5,-2,5,-1,5,0,5,1,5,2,5,3,5,4,5,5,5
 					DCD -5,4,-4,4,-3,4,-2,4,-1,4,0,4,1,4,2,4,3,4,4,4,5,4
@@ -137,12 +137,12 @@ COLUMNS 			DCB 22
 				EXPORT ROWS
 				EXPORT COLUMNS
 
+				AREA	data_rw, DATA, READWRITE, ALIGN=3
+					
+Opt_M_Coordinates	SPACE 242
 
                 AREA    |.text|, CODE, READONLY
-
-
-; Reset Handler
-
+					
 Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]  
 
@@ -152,8 +152,8 @@ Reset_Handler   PROC
 				
 				nop
 							
-                IMPORT  __main                
-                LDR     R0, =__main
+                IMPORT  main                
+                LDR     R0, =main
                 BX      R0
                 ENDP
 
@@ -186,13 +186,29 @@ UsageFault_Handler\
 SVC_Handler     PROC
                 EXPORT  SVC_Handler               [WEAK]
 					
-				;switch to psp
-				mrs r0, control
-				orr r0, r0, #0x2
-				msr control, r0				
+				;save register before editing
+				STMFD SP!, {R0-R12, LR}
 				
-				mov r0, #0 ;restore the register for the signature
-														
+				;retrieve the SVC number	
+				MRS	R1, psp	
+				LDR R0, [R1, #24]	;0x000000DC
+				LDR R0, [R0,#-4]	;0x000000D8
+				BIC R0, #0xFF000000
+				LSR R0, #16
+				
+				;jump to the right svc handler
+				cmp r0, #0xca
+				beq svc_CA
+				cmp r0, #0xfe
+				beq svc_FE
+				b exit
+				nop
+				
+
+svc_CA			;restore registers
+				LDMFD SP!, {R0-R12, LR}	;due to the recovery of the svc number
+				STMFD SP!, {R0-R12, LR}	;save register before editing
+
 				;comptue signature
                 eor r0, r0, r1
 				eor r0, r0, r2
@@ -207,8 +223,56 @@ SVC_Handler     PROC
 				eor r0, r0, r11
 				eor r0, r0, r12
 				eor r0, r0, lr
+				mrs r1, xPSR
+				eor r0, r0, r1
 				
-				push {r0}
+				;push through psp
+				mrs r1, psp
+				add r1, r1, #32
+				str r0, [r1]
+				
+				b exit
+
+svc_FE			;restore registers
+				LDMFD SP!, {R0-R12, LR}	;due to the recovery of the svc number
+				STMFD SP!, {R0-R12, LR}	;save register before editing
+				
+				mov r2, #0
+				ldr r0, =Matrix_Coordinates
+				ldr r3, =Opt_M_Coordinates
+				
+				
+loop 			cmp r2, #0x3D
+				beq exit
+				
+				ldrb r4, [r0]
+				ldrb r5, [r0, #4]
+				ldrb r6, [r0, #8]
+				ldrb r7, [r0, #12]
+				
+				strb r4, [r3, #3]
+				strb r5, [r3, #2]
+				strb r6, [r3, #1]
+				strb r7, [r3]
+				
+				;fix last values
+				cmp r2, #0x3C
+				andeq r6, r6, #2_11110000
+				andeq r7, r7, #2_00001111
+				strb r6, [r3, #1]
+				strb r7, [r3]
+				
+				add r0, r0, #16
+				add r3, r3, #4
+				add r2, r2, #1
+				
+				
+				b loop
+				
+
+exit			;restore registers
+				LDMFD SP!, {R0-R12, LR}
+				BX LR
 				
                 ENDP
 DebugMon_Handler\
